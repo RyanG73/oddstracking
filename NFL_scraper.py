@@ -41,7 +41,24 @@ for eventID in eventIDs:
                         selections = m['outcomes']
                         ML1 = selections[0]['oddsAmerican']
                         ML2 = selections[1]['oddsAmerican']
+                    if 'total' in globals():
+                        pass
+                    else:
+                        total = np.nan
+                    if 'line' in globals():
+                        pass
+                    else:
+                        line = np.nan
+                    if 'ML1' in globals():
+                        pass
+                    else:
+                        ML1 = np.nan
+                    if 'ML2' in globals():
+                        pass
+                    else:
+                        ML2 = np.nan
                 scrapeData.append([event_id,away_team,home_team,event_start,event_status,line,total,ML1,ML2])
+                del (line, total, ML1, ML2)
     except:
         pass
 df = pd.DataFrame(scrapeData, columns=['event_id','away_team','home_team','event_start','event_status','current_line','current_total','ML_away','ML_home'])

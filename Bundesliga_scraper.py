@@ -6,7 +6,7 @@ import time
 start_time = time.time()
 
 eventIDs = []
-url = 'https://sportsbook.draftkings.com//sites/US-SB/api/v1/eventgroup/3230960/full?format=json'
+url = 'https://sportsbook.draftkings.com//sites/US-SB/api/v1/eventgroup/43/full?format=json'
 response = requests.get(url)
 payload = response.json()['eventGroup']['events']
 for e in payload:
@@ -41,24 +41,7 @@ for eventID in eventIDs:
                         selections = m['outcomes']
                         ML1 = selections[0]['oddsAmerican']
                         ML2 = selections[1]['oddsAmerican']
-                    if 'total' in globals():
-                        pass
-                    else:
-                        total = np.nan
-                    if 'line' in globals():
-                        pass
-                    else:
-                        line = np.nan
-                    if 'ML1' in globals():
-                        pass
-                    else:
-                        ML1 = np.nan
-                    if 'ML2' in globals():
-                        pass
-                    else:
-                        ML2 = np.nan
                 scrapeData.append([event_id,away_team,home_team,event_start,event_status,line,total,ML1,ML2])
-                del(line,total,ML1,ML2)
     except:
         pass
 df = pd.DataFrame(scrapeData, columns=['event_id','away_team','home_team','event_start','event_status','current_line','current_total','ML_away','ML_home'])
@@ -68,7 +51,7 @@ df['capture_time'] = pd.to_datetime(datetime.datetime.now()).tz_localize('US/Eas
 
 
 try:
-    event_df = pd.read_csv('CBB_events.csv')
+    event_df = pd.read_csv('Bundesliga_events.csv')
     event_df['event_start'] = pd.to_datetime(event_df['event_start']).dt.tz_convert('US/Eastern')
     event_df['capture_time'] = pd.to_datetime(event_df['capture_time']).dt.tz_convert('US/Eastern')
     event_df['opening_capture_time'] = pd.to_datetime(event_df['opening_capture_time']).dt.tz_convert('US/Eastern')
@@ -107,10 +90,10 @@ event['closing_ML_home'] = np.where((event['countdown'] < one_hour)&((event['cou
 event['line_change'] = event['current_line'] - event['opening_line']
 event['total_change'] = event['current_total'] - event['opening_total']
 
-event['ML_away'] = event['ML_away'].astype(float)
+event['ML_away'] = event['ML_away'].astype(int)
 event['implied_probability_away'] = np.where(event['ML_away'] > 0,(100/(event['ML_away'] + 100)),(abs(event['ML_away'])/(abs(event['ML_away'])+100)))
 event['implied_probability_away'] = event['implied_probability_away'].round(2)
-event['ML_home'] = event['ML_home'].astype(float)
+event['ML_home'] = event['ML_home'].astype(int)
 event['implied_probability_home'] = np.where(event['ML_home'] > 0,(100/(event['ML_home'] + 100)),(abs(event['ML_home'])/(abs(event['ML_home'])+100)))
 event['implied_probability_home'] = event['implied_probability_home'].round(2)
 
@@ -142,7 +125,7 @@ event = event[['event_id',
 
 
 try:
-    history = pd.read_csv('CBB_history.csv')
+    history = pd.read_csv('Bundesliga_history.csv')
 except:
     history = pd.DataFrame(columns=['event_id','event_status','current_line','current_total','capture_time'])
 
@@ -150,7 +133,7 @@ narrow = df[['event_id','event_status','current_line','current_total','ML_away',
 history = pd.concat([history,narrow])
 
 
-history.to_csv('CBB_history.csv',index=False)
-event.to_csv('CBB_events.csv',index=False)
+history.to_csv('Bundesliga_history.csv',index=False)
+event.to_csv('Bundesliga_events.csv',index=False)
 
 print(f"Total Run Time: {round((time.time() - start_time)/60,3)} Minutes")

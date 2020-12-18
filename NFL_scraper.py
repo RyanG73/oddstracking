@@ -68,7 +68,7 @@ df['capture_time'] = pd.to_datetime(datetime.datetime.now()).tz_localize('US/Eas
 
 
 try:
-    event_df = pd.read_csv('NFL_events.csv')
+    event_df = pd.read_csv('output/NFL_events.csv')
     event_df['event_start'] = pd.to_datetime(event_df['event_start']).dt.tz_convert('US/Eastern')
     event_df['capture_time'] = pd.to_datetime(event_df['capture_time']).dt.tz_convert('US/Eastern')
     event_df['opening_capture_time'] = pd.to_datetime(event_df['opening_capture_time']).dt.tz_convert('US/Eastern')
@@ -142,7 +142,7 @@ event = event[['event_id',
 
 
 try:
-    history = pd.read_csv('NFL_history.csv')
+    history = pd.read_csv('output/NFL_history.csv')
 except:
     history = pd.DataFrame(columns=['event_id','event_status','current_line','current_total','capture_time'])
 
@@ -150,7 +150,7 @@ narrow = df[['event_id','event_status','current_line','current_total','ML_away',
 history = pd.concat([history,narrow])
 
 
-history.to_csv('NFL_history.csv',index=False)
-event.to_csv('NFL_events.csv',index=False)
+history.to_csv('output/NFL_history.csv',index=False)
+event.to_csv('output/NFL_events.csv',index=False)
 
 print(f"Total Run Time: {round((time.time() - start_time)/60,3)} Minutes")

@@ -88,7 +88,7 @@ for g in leagues:
                     del (line, total, ML1, ML2,period,minute,second,home_score,away_score)
         except:
             pass
-    df = pd.DataFrame(scrapeData, columns=['event_id','away_team','home_team','event_start','event_status','current_line','current_total','ML_away','ML_home'])
+    df = pd.DataFrame(scrapeData, columns=['event_id','away_team','home_team','event_start','event_status','current_line','current_total','ML_away','ML_home','period','minute','second','home_score','away_score'])
     df['event_start'] = pd.to_datetime(df['event_start']).dt.tz_convert('US/Eastern')
     df['capture_time'] = pd.to_datetime(datetime.datetime.now()).tz_localize('US/Eastern')
     try:
@@ -160,8 +160,8 @@ for g in leagues:
     try:
         history = pd.read_csv(f'output/{g}_history.csv')
     except:
-        history = pd.DataFrame(columns=['event_id','event_status','current_line','current_total','capture_time'])
-    narrow = df[['event_id','event_status','current_line','current_total','ML_away','ML_home','capture_time']]
+        history = pd.DataFrame(columns=['event_id','event_status','current_line','current_total','capture_time','period','minute','second','home_score','away_score'])
+    narrow = df[['event_id','event_status','current_line','current_total','ML_away','ML_home','capture_time','period','minute','second','home_score','away_score']]
     history = pd.concat([history,narrow])
     history.to_csv(f'output/{g}_history.csv',index=False)
     event.to_csv(f'output/{g}_events.csv',index=False)

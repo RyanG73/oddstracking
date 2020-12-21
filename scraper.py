@@ -26,6 +26,12 @@ for g in leagues:
             event_start = payload['event']['startDate']
             event_status = payload['event']['eventStatus']['state']
             categories = payload['eventCategories']
+            if event_status == 'STARTED':
+                period = payload['event']['eventStatus']['period']
+                minute = payload['event']['eventStatus']['minute']
+                second = payload['event']['eventStatus']['second']
+                home_score = payload['event']['eventStatus']['homeTeamScore']
+                away_score = payload['event']['eventStatus']['awayTeamScore']
             for c in categories:
                 if c['name'] == 'Game Lines':
                     markets = c['componentizedOffers'][0]['offers'][0]
@@ -58,8 +64,28 @@ for g in leagues:
                             pass
                         else:
                             ML2 = np.nan
-                    scrapeData.append([event_id,away_team,home_team,event_start,event_status,line,total,ML1,ML2])
-                    del (line, total, ML1, ML2)
+                        if 'period' in globals():
+                            pass
+                        else:
+                            period = np.nan
+                        if 'minute' in globals():
+                            pass
+                        else:
+                            minute = np.nan
+                        if 'second' in globals():
+                            pass
+                        else:
+                            second = np.nan
+                        if 'home_score' in globals():
+                            pass
+                        else:
+                            home_score = np.nan
+                        if 'away_score' in globals():
+                            pass
+                        else:
+                            away_score = np.nan
+                    scrapeData.append([event_id,away_team,home_team,event_start,event_status,line,total,ML1,ML2,period,minute,second,home_score,away_score])
+                    del (line, total, ML1, ML2,period,minute,second,home_score,away_score)
         except:
             pass
     df = pd.DataFrame(scrapeData, columns=['event_id','away_team','home_team','event_start','event_status','current_line','current_total','ML_away','ML_home'])

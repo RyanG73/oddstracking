@@ -5,7 +5,8 @@ import datetime
 import time
 start_time = time.time()
 
-leagues = {'NFL':3,'CFB':2,'NBA':103,'CBB':3230960}
+leagues = {'NFL':3}
+#leagues = {'CFB':2,'NBA':103}
 for g in leagues:
     eventIDs = []
     url = f'https://sportsbook.draftkings.com//sites/US-SB/api/v1/eventgroup/{leagues[g]}/full?format=json'

@@ -27,9 +27,9 @@ history2['implied_probability_away'] = np.where(history2['ML_away'] > 0,(100/(hi
 history2['implied_probability_home'] = np.where(history2['ML_home'] > 0,(100/(history2['ML_home'] + 100)),(abs(history2['ML_home'])/(abs(history2['ML_home'])+100)))
 history2['true_probability_home'] = history2['implied_probability_home'] / (history2['implied_probability_home'] + history2['implied_probability_away'])
 
-history2 = history2[history2['date'] == history2['date'].max()]
+#history2 = history2[history2['date'] == '2020-12-20']
 #history2 = history2[history2['game_slot'] == 'primetime']
-#history2 = history2[history2['away_team'] == 'CLE Browns']
+history2 = history2[history2['home_team'] == 'Washington']
 
 #sns.lineplot(data=testgame,x='capture_time',y='current_line',hue='event_status')
 

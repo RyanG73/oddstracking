@@ -1,0 +1,4 @@
+event_id,event_status,current_line,current_total,capture_time,period,minute,second,home_score,away_score,away_ML,tie_ML,home_ML
+179637108,STARTED,,1.05,2020-12-23 16:18:37.253167-05:00,2nd half,61,1,0,0,400,117,155
+179637108,STARTED,,-0.45,2020-12-23 16:42:49.926324-05:00,2nd half,85,1,0,0,1150,-335,380
+179637108,STARTED,,1.5,2020-12-23 16:45:11.625053-05:00,2nd half,87,1,0,0,+37500,+1700,-5000
